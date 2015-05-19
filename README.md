@@ -52,11 +52,12 @@ the values in this table.
 
 ```ruby
 # config/initializers/persistent_hash.rb
-PersistentHash::Formatter.add(Time, ->(val) {val.utc.iso8601})
+PersistentHash::Formatter.add(Fixnum, ->(val) { "This Fixnum is #{val}."})
 
-PersistentHash['time'] = Time.parse('2015-05-19T00:00:00Z')
-PersistentHash.where(key_name: 'time').first.readable_value
-# => '2015-05-19T00:00:00Z'
+PersistentHash['number'] = 5
+
+PersistentHash::Hash.where(key_name: 'number').first.readable_value
+# => "This Fixnum is 5."
 ```
 
 ## Why?
