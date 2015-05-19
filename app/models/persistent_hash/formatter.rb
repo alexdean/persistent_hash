@@ -39,7 +39,7 @@ module PersistentHash
     end
 
     # forget all current formatters
-    def reset!
+    def self.reset!
       @formatters = {}
       true
     end

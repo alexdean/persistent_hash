@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Alex Dean"]
   s.email       = ["alex@crackpot.org"]
   s.homepage    = "https://github.com/alexdean/persistent_hash"
-  s.summary     = "ActiveRecord-based key/value store for mysql."
+  s.summary     = "ActiveRecord-based key/value store for Rails applications."
   s.description = "Handy place to stick small bits of persistent data. Like redis if you don't want to install redis."
   s.license     = "MIT"
 
@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 4.2.1"
-  s.add_dependency "mysql2"
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rake"

@@ -4,21 +4,16 @@ module PersistentHash
     self.table_name = 'persistent_hash'
 
     def self.[]=(key_name, value)
-      if value.nil?
-        where(key_name: key_name).delete_all
-        nil
-      else
+      where(key_name: key_name).delete_all
+
+      if ! value.nil?
         formatted = PersistentHash::Formatter.format(value)
 
-        sql = <<-EOF
-        REPLACE INTO #{self.table_name}
-        SET
-          key_name       = #{sanitize(key_name)},
-          readable_value = #{sanitize(formatted)},
-          marshalled     = '#{Base64.encode64(Marshal.dump(value))}',
-          updated_at     = '#{Time.zone.now.to_s(:db)}'
-        EOF
-        connection.execute(sql)
+        create!(
+          key_name: key_name,
+          readable_value: formatted,
+          marshalled: Base64.encode64(Marshal.dump(value))
+        )
       end
     end
 
