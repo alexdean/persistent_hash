@@ -1,0 +1,256 @@
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mPersistentHash::Hash Load (0.2ms)[0m  [1mSELECT `persistent_hash`.* FROM `persistent_hash`[0m
+  [1m[35m (0.2ms)[0m          REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'bar',
+          marshalled     = 'BAhJIghiYXIGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:08:06'
+
+  [1m[36mSQL (0.2ms)[0m  [1mDELETE FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo'[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM `persistent_hash`
+  [1m[36m (0.4ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'bar',
+          marshalled     = 'BAhJIghiYXIGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:08:27'
+[0m
+  [1m[35mSQL (0.2ms)[0m  DELETE FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo'
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM `persistent_hash`[0m
+  [1m[35m (0.4ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'bar',
+          marshalled     = 'BAhJIghiYXIGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:09:21'
+[0m
+  [1m[35mSQL (0.2ms)[0m  DELETE FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo'
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM `persistent_hash`[0m
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'time',
+          readable_value = '2013-05-20T00:12:30Z',
+          marshalled     = 'BAhJdToJVGltZQ2AUhzAAADgMQY6CXpvbmVJIghVVEMGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:09:33'
+[0m
+  [1m[35mPersistentHash::Hash Load (0.2ms)[0m  SELECT  `persistent_hash`.* FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'time'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1
+  [1m[36m (0.2ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'fixnum',
+          readable_value = 12.0,
+          marshalled     = 'BAhpEQ==
+',
+          updated_at     = '2015-05-19 14:09:33'
+[0m
+  [1m[35mPersistentHash::Hash Load (0.2ms)[0m  SELECT  `persistent_hash`.* FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'fixnum'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'bar',
+          marshalled     = 'BAhJIghiYXIGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:09:33'
+[0m
+  [1m[35mPersistentHash::Hash Load (0.6ms)[0m  SELECT  `persistent_hash`.`marshalled` FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'bar',
+          marshalled     = 'BAhJIghiYXIGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:09:33'
+[0m
+  [1m[35m (0.2ms)[0m          REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'baz',
+          marshalled     = 'BAhJIghiYXoGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:09:33'
+
+  [1m[36mPersistentHash::Hash Load (0.1ms)[0m  [1mSELECT  `persistent_hash`.`marshalled` FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.6ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mPersistentHash::Hash Load (0.1ms)[0m  SELECT  `persistent_hash`.`marshalled` FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'missing'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'bar',
+          marshalled     = 'BAhJIghiYXIGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:09:33'
+[0m
+  [1m[35mSQL (0.1ms)[0m  DELETE FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo'
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM `persistent_hash`[0m
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m          REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo\',\'bar\'); delete from persistent_hash;',
+          readable_value = 'foo',
+          marshalled     = 'BAhJIghmb28GOgZFVA==
+',
+          updated_at     = '2015-05-19 14:09:33'
+
+  [1m[36mPersistentHash::Hash Load (0.2ms)[0m  [1mSELECT  `persistent_hash`.`marshalled` FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo\',\'bar\'); delete from persistent_hash;'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.1ms)[0m          REPLACE INTO persistent_hash
+        SET
+          key_name       = 'int',
+          readable_value = 5.0,
+          marshalled     = 'BAhpCg==
+',
+          updated_at     = '2015-05-19 14:09:33'
+
+  [1m[36mPersistentHash::Hash Load (0.2ms)[0m  [1mSELECT  `persistent_hash`.`marshalled` FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'int'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m          REPLACE INTO persistent_hash
+        SET
+          key_name       = 'time',
+          readable_value = '2015-05-19T14:09:33Z',
+          marshalled     = 'BAhJdToJVGltZQ1u0hzArmkZJgY6CXpvbmVJIghVVEMGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:09:33'
+
+  [1m[36mPersistentHash::Hash Load (0.2ms)[0m  [1mSELECT  `persistent_hash`.`marshalled` FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'time'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mPersistentHash::Hash Load (0.2ms)[0m  [1mSELECT  `persistent_hash`.`marshalled` FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'missing'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m          REPLACE INTO persistent_hash
+        SET
+          key_name       = 'time',
+          readable_value = '2013-05-20T00:12:30Z',
+          marshalled     = 'BAhJdToJVGltZQ2AUhzAAADgMQY6CXpvbmVJIghVVEMGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:10:16'
+
+  [1m[36mPersistentHash::Hash Load (0.2ms)[0m  [1mSELECT  `persistent_hash`.* FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'time'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.2ms)[0m          REPLACE INTO persistent_hash
+        SET
+          key_name       = 'fixnum',
+          readable_value = 12.0,
+          marshalled     = 'BAhpEQ==
+',
+          updated_at     = '2015-05-19 14:10:16'
+
+  [1m[36mPersistentHash::Hash Load (0.2ms)[0m  [1mSELECT  `persistent_hash`.* FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'fixnum'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m          REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'bar',
+          marshalled     = 'BAhJIghiYXIGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:10:16'
+
+  [1m[36m (0.3ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'baz',
+          marshalled     = 'BAhJIghiYXoGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:10:16'
+[0m
+  [1m[35mPersistentHash::Hash Load (0.1ms)[0m  SELECT  `persistent_hash`.`marshalled` FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'int',
+          readable_value = 5.0,
+          marshalled     = 'BAhpCg==
+',
+          updated_at     = '2015-05-19 14:10:16'
+[0m
+  [1m[35mPersistentHash::Hash Load (0.2ms)[0m  SELECT  `persistent_hash`.`marshalled` FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'int'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1
+  [1m[36m (0.2ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'time',
+          readable_value = '2015-05-19T14:10:16Z',
+          marshalled     = 'BAhJdToJVGltZQ1u0hzAKTwCKQY6CXpvbmVJIghVVEMGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:10:16'
+[0m
+  [1m[35mPersistentHash::Hash Load (0.2ms)[0m  SELECT  `persistent_hash`.`marshalled` FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'time'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.0ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'bar',
+          marshalled     = 'BAhJIghiYXIGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:10:16'
+[0m
+  [1m[35mPersistentHash::Hash Load (0.2ms)[0m  SELECT  `persistent_hash`.* FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'bar',
+          marshalled     = 'BAhJIghiYXIGOgZFVA==
+',
+          updated_at     = '2015-05-17 14:10:16'
+[0m
+  [1m[35mPersistentHash::Hash Load (0.2ms)[0m  SELECT  `persistent_hash`.* FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1
+  [1m[36m (0.6ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo\',\'bar\'); delete from persistent_hash;',
+          readable_value = 'foo',
+          marshalled     = 'BAhJIghmb28GOgZFVA==
+',
+          updated_at     = '2015-05-19 14:10:16'
+[0m
+  [1m[35mPersistentHash::Hash Load (0.1ms)[0m  SELECT  `persistent_hash`.`marshalled` FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo\',\'bar\'); delete from persistent_hash;'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'bar',
+          marshalled     = 'BAhJIghiYXIGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:10:16'
+[0m
+  [1m[35mPersistentHash::Hash Load (0.1ms)[0m  SELECT  `persistent_hash`.`marshalled` FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo'  ORDER BY `persistent_hash`.`id` ASC LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1m        REPLACE INTO persistent_hash
+        SET
+          key_name       = 'foo',
+          readable_value = 'bar',
+          marshalled     = 'BAhJIghiYXIGOgZFVA==
+',
+          updated_at     = '2015-05-19 14:10:16'
+[0m
+  [1m[35mSQL (0.1ms)[0m  DELETE FROM `persistent_hash` WHERE `persistent_hash`.`key_name` = 'foo'
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM `persistent_hash`[0m
+  [1m[35m (0.3ms)[0m  ROLLBACK
