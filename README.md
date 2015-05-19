@@ -38,6 +38,7 @@ gem 'persistent_hash'
 ```
 
 ```
+$ bundle
 $ rake persistent_hash:install:migrations
 $ rake db:migrate
 ```
