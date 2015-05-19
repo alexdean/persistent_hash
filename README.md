@@ -16,16 +16,29 @@ PersistentHash['foo'] = :bar
 
 # retrieves that record
 PersistentHash['foo']
-# => 'bar'
+# => :bar
 ```
+
+Stored objects are [marshalled](http://ruby-doc.org/core-2.2.2/Marshal.html) for
+storage, and unmarshalled on retrieval.
+
+This means:
+
+  - you can store most Ruby objects
+  - storage is not necessarily portable across Ruby versions
+
+Read more about the [Marshal](http://ruby-doc.org/core-2.2.2/Marshal.html)
+module to understand the limitations of this approach.
 
 ## Installation
 
-```
+```ruby
 # Gemfile
 gem 'persistent_hash'
+```
 
-$ rake waiting_room:install:migrations
+```
+$ rake persistent_hash:install:migrations
 $ rake db:migrate
 ```
 
