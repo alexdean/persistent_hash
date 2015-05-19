@@ -4,10 +4,6 @@ PersistentHash provides an ActiveRecord-base key/value store which can be used
 for various bits of application state which don't need dedicated models of
 their own.
 
-I've used this gem in production for storing relatively low volumes of data.
-Typically it serves as a registry for configuration values and current-state
-information. It may not be suitable as a high-volume key/value store.
-
 ## Usage
 
 ```ruby
@@ -18,17 +14,6 @@ PersistentHash['foo'] = :bar
 PersistentHash['foo']
 # => :bar
 ```
-
-Stored objects are [marshalled](http://ruby-doc.org/core-2.2.2/Marshal.html) for
-storage, and unmarshalled on retrieval.
-
-This means:
-
-  - you can store most Ruby objects
-  - storage is not necessarily portable across Ruby versions
-
-Read more about the [Marshal](http://ruby-doc.org/core-2.2.2/Marshal.html)
-module to understand the limitations of this approach.
 
 ## Installation
 
@@ -60,6 +45,27 @@ PersistentHash['number'] = 5
 PersistentHash::Hash.where(key_name: 'number').first.readable_value
 # => "This Fixnum is 5."
 ```
+
+## Limitations
+
+### Low-volume
+
+I've used this gem in production for storing relatively low volumes of data.
+Typically it serves as a registry for configuration values and current-state
+information. It may not be suitable as a high-volume key/value store.
+
+### Marshal usage
+
+Stored objects are [marshalled](http://ruby-doc.org/core-2.2.2/Marshal.html) for
+storage, and unmarshalled on retrieval.
+
+This means:
+
+  - you can store most Ruby objects
+  - storage is not necessarily portable across Ruby versions
+
+Read more about the [Marshal](http://ruby-doc.org/core-2.2.2/Marshal.html)
+module to understand the limitations of this approach.
 
 ## Why?
 
