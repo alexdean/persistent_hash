@@ -7,7 +7,4 @@ module PersistentHash
   def self.[](key_name)
     PersistentHash::Hash[key_name]
   end
-  def self.delete(key_name)
-    PersistentHash::Hash.delete(key_name)
-  end
 end
