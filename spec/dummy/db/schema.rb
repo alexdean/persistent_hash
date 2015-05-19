@@ -11,13 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518213536) do
+ActiveRecord::Schema.define(version: 20150519145619) do
 
   create_table "persistent_hash", force: :cascade do |t|
     t.string   "key_name",       null: false
     t.string   "readable_value", null: false
     t.text     "marshalled",     null: false
-    t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
 
