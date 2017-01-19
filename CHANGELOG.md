@@ -1,4 +1,4 @@
-## Unreleased
+## 0.0.5 : January 19, 2017
 
   - value column is now a TEXT rather than a VARCHAR. allow larger values.
 
