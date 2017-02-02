@@ -5,16 +5,18 @@ module PersistentHash
 
     # save a value in the hash
     def self.[]=(key_name, value)
-      where(key_name: key_name).delete_all
+      transaction do
+        where(key_name: key_name).delete_all
 
-      if ! value.nil?
-        formatted = PersistentHash::Formatter.format(value)
+        if ! value.nil?
+          formatted = PersistentHash::Formatter.format(value)
 
-        create!(
-          key_name: key_name,
-          readable_value: formatted,
-          marshalled: Base64.encode64(Marshal.dump(value))
-        )
+          create!(
+            key_name: key_name,
+            readable_value: formatted,
+            marshalled: Base64.encode64(Marshal.dump(value))
+          )
+        end
       end
     end
 
