@@ -1,4 +1,4 @@
-class CreatePersistentHash < ActiveRecord::Migration[5.0]
+class CreatePersistentHash < ActiveRecord::Migration[4.2]
   def change
     create_table :persistent_hash do |t|
       t.string   :key_name, null: false
@@ -7,6 +7,6 @@ class CreatePersistentHash < ActiveRecord::Migration[5.0]
       t.datetime :updated_at, null: false
     end
 
-    add_index :persistent_hash, :key_name, unique: true
+    add_index :persistent_hash, :key_name, unique: true, name: 'persistent_hash_uniq'
   end
 end

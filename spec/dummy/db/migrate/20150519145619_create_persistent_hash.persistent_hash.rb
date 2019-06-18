@@ -1,5 +1,4 @@
-# This migration comes from persistent_hash (originally 20150518213536)
-class CreatePersistentHash < ActiveRecord::Migration
+class CreatePersistentHash < ActiveRecord::Migration[4.2]
   def change
     create_table :persistent_hash do |t|
       t.string   :key_name, null: false
@@ -8,6 +7,6 @@ class CreatePersistentHash < ActiveRecord::Migration
       t.datetime :updated_at, null: false
     end
 
-    add_index :persistent_hash, :key_name, unique: true
+    add_index :persistent_hash, :key_name, unique: true, name: 'persistent_hash_uniq'
   end
 end
