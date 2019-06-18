@@ -1,4 +1,4 @@
-class CreatePersistentHash < ActiveRecord::Migration
+class CreatePersistentHash < ActiveRecord::Migration[5.0]
   def change
     create_table :persistent_hash do |t|
       t.string   :key_name, null: false
