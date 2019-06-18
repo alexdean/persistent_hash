@@ -6,7 +6,7 @@ test:
   username: travis
   password:
   database: persistent_hash_test
-<% elsif ENV['DB'] == 'psql' %>
+<% elsif ENV['DB'] == 'pgsql' %>
   adapter: postgresql
   database: persistent_hash_test
   username: travis
