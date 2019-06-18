@@ -11,6 +11,5 @@ group :development, :test do
   gem 'rake', '~> 12.0'
   gem 'rspec', '~> 3.8.0'
   gem 'rspec-rails', '~> 3.8.0'
-  gem 'sqlite3', '~> 1.4.0'
   gem 'timecop', '~> 0.9.0'
 end
