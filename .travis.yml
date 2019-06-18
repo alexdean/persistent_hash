@@ -19,3 +19,6 @@ before_install:
 before_script:
   - cp spec/dummy/config/database.yml.travis spec/dummy/config/database.yml
   - psql -c 'CREATE DATABASE persistent_hash_test;' -U postgres
+script:
+  - bundle exec rake db:schema:load RAILS_ENV=test
+  - bundle exec rake spec
