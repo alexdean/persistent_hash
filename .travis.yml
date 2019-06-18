@@ -14,6 +14,8 @@ env:
 services:
   - mysql
   - postgresql
+addons:
+  postgresql: "9.4" #
 before_install:
   - mysql -e 'CREATE DATABASE persistent_hash_test;'
 before_script:
