@@ -1,3 +1,8 @@
+## unreleased
+
+  - do "select then insert/update/delete" instead of "always delete then always insert"
+    to consume fewer autoinc values and hopefully prevent some deadlocks. [#6](https://github.com/alexdean/persistent_hash/pull/6)
+
 ## 0.0.6 : February 2, 2017
 
   - ensure that keys are updated within a transaction, so another thread cannot
