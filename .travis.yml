@@ -1,0 +1,21 @@
+language: ruby
+rvm:
+  - 2.4
+  - 2.5
+  - 2.6
+gemfile:
+  - gemfiles/rails-5-0.gemspec
+  - gemfiles/Gemfile-rails-5.1
+  - gemfiles/Gemfile-rails-5.2
+  - gemfiles/Gemfile-rails-6.0
+env:
+  - DB=mysql
+  - DB=pgsql
+services:
+  - mysql
+  - postgresql
+before_install:
+  - mysql -e 'CREATE DATABASE persistent_hash_test;'
+before_script:
+  - cp spec/dummy/config/database.yml.travis spec/dummy/config/database.yml
+  - psql -c 'CREATE DATABASE persistent_hash_test;' -U postgres
