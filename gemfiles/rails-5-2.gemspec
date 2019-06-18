@@ -1,7 +1,7 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "persistent_hash/version"
+require_relative "../lib/persistent_hash/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
