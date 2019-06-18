@@ -36,7 +36,7 @@ RSpec.describe PersistentHash::Hash, type: :model do
 
   it "should store non-string types" do
     subject['int'] = 5
-    expect(subject['int'].class).to eq Fixnum
+    expect(subject['int'].class).to eq Integer
 
     subject['time'] = Time.now
     expect(subject['time'].class).to eq Time
@@ -66,7 +66,7 @@ RSpec.describe PersistentHash::Hash, type: :model do
     subject['time'] = '2013-05-20T00:12:30Z'.to_time
     expect(subject.where(key_name: 'time').first.readable_value).to eq '2013-05-20T00:12:30Z'
 
-    PersistentHash::Formatter.add(Fixnum, ->(val) {val.to_f})
+    PersistentHash::Formatter.add(Integer, ->(val) {val.to_f})
 
     subject['fixnum'] = 12
     expect(subject.where(key_name: 'fixnum').first.readable_value).to eq '12.0'

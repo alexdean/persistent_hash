@@ -38,12 +38,12 @@ the values in this table.
 
 ```ruby
 # config/initializers/persistent_hash.rb
-PersistentHash::Formatter.add(Fixnum, ->(val) { "This Fixnum is #{val}."})
+PersistentHash::Formatter.add(Integer, ->(val) { "This Integer is #{val}."})
 
 PersistentHash['number'] = 5
 
 PersistentHash::Hash.where(key_name: 'number').first.readable_value
-# => "This Fixnum is 5."
+# => "This Integer is 5."
 ```
 
 ## Limitations
