@@ -1,0 +1,30 @@
+language: ruby
+rvm:
+  - 2.4
+  - 2.5
+  - 2.6
+gemfile:
+  - gemfiles/rails-5-0.gemfile
+  - gemfiles/rails-5-1.gemfile
+  - gemfiles/rails-5-2.gemfile
+  - gemfiles/rails-6-0.gemfile
+env:
+  - DB=mysql
+  - DB=pgsql
+services:
+  - mysql
+  - postgresql
+addons:
+  postgresql: "9.4" #
+before_install:
+  - mysql -e 'CREATE DATABASE persistent_hash_test;'
+before_script:
+  - psql -c 'CREATE DATABASE persistent_hash_test;' -U postgres
+script:
+  - bundle exec rake db:schema:load RAILS_ENV=test
+  - bundle exec rake spec
+matrix:
+  exclude:
+  # rails 6 requires ruby >= 2.5
+  - rvm: 2.4
+    gemfile: gemfiles/rails-6-0.gemfile
