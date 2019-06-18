@@ -30,6 +30,10 @@ RSpec.describe PersistentHash::Hash, type: :model do
     expect(subject.count).to eq 0
   end
 
+  it "should not error if nullifying an unknown value" do
+    subject['foo'] = nil
+  end
+
   it "should return nil for unknown keys" do
     expect(subject['missing']).to eq nil
   end
@@ -50,14 +54,14 @@ RSpec.describe PersistentHash::Hash, type: :model do
 
     # to_i to fix resolution problems.
     # (now has microseconds, which get removed by passing through the db)
-    expect(subject.where(key_name: 'foo').first.updated_at.to_i).to eq now.to_i
+    expect(subject.find_by(key_name: 'foo').updated_at.to_i).to eq now.to_i
 
     the_past = now - 2.days
     Timecop.freeze(the_past) do
-      subject['foo'] = 'bar'
+      subject['foo'] = 'baz'
     end
 
-    expect(subject.where(key_name: 'foo').first.updated_at.to_i).to eq the_past.to_i
+    expect(subject.find_by(key_name: 'foo').updated_at.to_i).to eq the_past.to_i
   end
 
   it "should use formatters to set readable values" do

@@ -1,22 +1,21 @@
 module PersistentHash
   class Hash < ActiveRecord::Base
-
     self.table_name = 'persistent_hash'
 
     # save a value in the hash
     def self.[]=(key_name, value)
-      transaction do
-        where(key_name: key_name).delete_all
+      item = where(key_name: key_name)
+             .lock
+             .first_or_initialize
 
-        if ! value.nil?
-          formatted = PersistentHash::Formatter.format(value)
-
-          create!(
-            key_name: key_name,
-            readable_value: formatted,
-            marshalled: Base64.encode64(Marshal.dump(value))
-          )
-        end
+      if value.nil?
+        item.destroy
+      else
+        formatted = PersistentHash::Formatter.format(value)
+        item.update_attributes(
+          readable_value: formatted,
+          marshalled: Base64.encode64(Marshal.dump(value))
+        )
       end
     end
 
@@ -32,6 +31,5 @@ module PersistentHash
 
       value
     end
-
   end
 end
