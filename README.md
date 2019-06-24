@@ -4,6 +4,10 @@ PersistentHash provides an ActiveRecord-base key/value store which can be used
 for various bits of application state which don't need dedicated models of
 their own.
 
+## Build Status
+
+[![Build Status](https://travis-ci.org/alexdean/persistent_hash.svg?branch=master)](https://travis-ci.org/alexdean/persistent_hash)
+
 ## Usage
 
 ```ruby
