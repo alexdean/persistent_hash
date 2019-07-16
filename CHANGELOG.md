@@ -1,4 +1,4 @@
-## unreleased
+## 0.7.0 : July 16, 2019
 
   - do "select then insert/update/delete" instead of "always delete then always insert"
     to consume fewer autoinc values and hopefully prevent some deadlocks. [#6](https://github.com/alexdean/persistent_hash/pull/6)
