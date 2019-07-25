@@ -12,7 +12,7 @@ module PersistentHash
         item.destroy
       else
         formatted = PersistentHash::Formatter.format(value)
-        item.update_attributes(
+        item.update(
           readable_value: formatted,
           marshalled: Base64.encode64(Marshal.dump(value))
         )
