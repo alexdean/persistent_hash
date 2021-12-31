@@ -22,7 +22,11 @@ jobs:
           POSTGRES_USER: test
           POSTGRES_DB: persistent_hash_test
           POSTGRES_PASSWORD: ""
-        ports: ["5432:5432"]
+        ports:
+          # will assign a random free host port
+          - 5432/tcp
+          # needed because the postgres container does not provide a healthcheck
+          options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     strategy:
       fail-fast: false
