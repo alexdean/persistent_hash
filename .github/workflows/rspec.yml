@@ -1,0 +1,58 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+
+name: rspec
+
+on:
+  push:
+    branches: '**'
+
+jobs:
+  test:
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: test
+          POSTGRES_DB: persistent_hash_test
+          POSTGRES_PASSWORD: ""
+        ports: ["5432:5432"]
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['2.5', '2.6', '2.7', '3.0', '3.1']
+        gemfile: ['gemfiles/rails-5-2.gemfile', 'gemfiles/rails-6-0.gemfile']
+        exclude:
+          # rails 5.2 doesnt work with ruby 3
+          - gemfile: 'gemfiles/rails-5-2.gemfile'
+            ruby: '3.0'
+          - gemfile: 'gemfiles/rails-5-2.gemfile'
+            ruby: '3.1'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
+        # change this to (see https://github.com/ruby/setup-ruby#versioning):
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Setup test database
+        env:
+          DB: pgsql
+          DB_USERNAME: test
+          RAILS_ENV: test
+          # PGHOST: localhost
+          # PGUSER: test
+        run: |
+          bin/rails db:setup
+      - name: Install dependencies
+        run: bundle install --gemfile=${{ matrix.gemfile }}
+      - name: Run tests
+        run: bundle exec --gemfile=${{ matrix.gemfile }} rake spec
