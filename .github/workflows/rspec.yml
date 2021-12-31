@@ -53,6 +53,6 @@ jobs:
           # PGHOST: localhost
           # PGUSER: test
         run: |
-          bundle exec --gemfile=${{ matrix.gemfile }} rails db:setup
+          bundle exec --gemfile=${{ matrix.gemfile }} rails db:schema:load
       - name: Run tests
         run: bundle exec --gemfile=${{ matrix.gemfile }} rake spec
