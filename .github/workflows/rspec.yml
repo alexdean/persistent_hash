@@ -62,7 +62,7 @@ jobs:
           # If we were running the job on in a container this would be postgres
           POSTGRES_HOST: localhost
           POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }} # get randomly assigned published port
-          POSTGRES_PASSWORD: ${{ job.services.postgres.env.POSTGRES_PASSWORD }}
+          POSTGRES_PASSWORD: password # copypasta. ${{ job.services.postgres.env.POSTGRES_PASSWORD }}
           RAILS_ENV: test
         run: |
           bundle exec --gemfile=${{ matrix.gemfile }} rails db:schema:load
