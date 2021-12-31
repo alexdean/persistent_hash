@@ -64,7 +64,7 @@ jobs:
         run: bundle install --gemfile=${{ matrix.gemfile }}
       - name: Setup test database
         run: |
-          bundle exec --gemfile=${{ matrix.gemfile }} rails db:schema:load
+          bundle exec --gemfile=${{ matrix.gemfile }} rails db:schema:load --trace
       - name: Run tests
         run: |
-          bundle exec --gemfile=${{ matrix.gemfile }} rake spec
+          bundle exec --gemfile=${{ matrix.gemfile }} rake spec --trace
