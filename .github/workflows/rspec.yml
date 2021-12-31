@@ -13,6 +13,8 @@ on:
 
 jobs:
   test:
+    runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres:12
@@ -21,6 +23,7 @@ jobs:
           POSTGRES_DB: persistent_hash_test
           POSTGRES_PASSWORD: ""
         ports: ["5432:5432"]
+
     strategy:
       fail-fast: false
       matrix:
@@ -32,8 +35,6 @@ jobs:
             ruby: '3.0'
           - gemfile: 'gemfiles/rails-5-2.gemfile'
             ruby: '3.1'
-
-    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -47,11 +48,15 @@ jobs:
         run: bundle install --gemfile=${{ matrix.gemfile }}
       - name: Setup test database
         env:
+          # configures database.yml in dummy app
           DB: pgsql
           DB_USERNAME: test
+          # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
+          # use localhost for the host here because we are running the job on the VM.
+          # If we were running the job on in a container this would be postgres
+          PG_HOST: localhost
+          PG_PORT: ${{ job.services.postgres.ports[5432] }} # get randomly assigned published port
           RAILS_ENV: test
-          # PGHOST: localhost
-          # PGUSER: test
         run: |
           bundle exec --gemfile=${{ matrix.gemfile }} rails db:schema:load
       - name: Run tests

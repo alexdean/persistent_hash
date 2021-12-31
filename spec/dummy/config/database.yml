@@ -7,8 +7,8 @@ default: &default
   collation: utf8mb4_unicode_ci
 <% elsif ENV['DB'] == 'pgsql' %>
   adapter: postgresql
-  host: localhost
-  port: 5432
+  host: <%= ENV['PG_HOST'] %>
+  port: <%= ENV['PG_PORT'] %>
 <%
   else
     raise "unknown DB value '#{ENV['DB']}'"
