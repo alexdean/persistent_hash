@@ -42,6 +42,18 @@ jobs:
           - gemfile: 'gemfiles/rails-5-2.gemfile'
             ruby: '3.1'
 
+    env:
+      # configures database.yml in dummy app
+      DB: pgsql
+      DB_USERNAME: test
+      # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
+      # use localhost for the host here because we are running the job on the VM.
+      # If we were running the job on in a container this would be postgres
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }} # get randomly assigned published port
+      POSTGRES_PASSWORD: password # copypasta. ${{ job.services.postgres.env.POSTGRES_PASSWORD }}
+      RAILS_ENV: test
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby
@@ -53,18 +65,8 @@ jobs:
       - name: Install dependencies
         run: bundle install --gemfile=${{ matrix.gemfile }}
       - name: Setup test database
-        env:
-          # configures database.yml in dummy app
-          DB: pgsql
-          DB_USERNAME: test
-          # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
-          # use localhost for the host here because we are running the job on the VM.
-          # If we were running the job on in a container this would be postgres
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }} # get randomly assigned published port
-          POSTGRES_PASSWORD: password # copypasta. ${{ job.services.postgres.env.POSTGRES_PASSWORD }}
-          RAILS_ENV: test
         run: |
           bundle exec --gemfile=${{ matrix.gemfile }} rails db:schema:load
       - name: Run tests
-        run: bundle exec --gemfile=${{ matrix.gemfile }} rake spec
+        run: |
+          bundle exec --gemfile=${{ matrix.gemfile }} rake spec
