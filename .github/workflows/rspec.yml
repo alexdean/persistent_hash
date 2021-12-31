@@ -21,7 +21,9 @@ jobs:
         env:
           POSTGRES_USER: test
           POSTGRES_DB: persistent_hash_test
-          POSTGRES_PASSWORD: ""
+          # password cannot be blank?
+          # https://dev.to/lxxxvi/til-using-postgres-in-github-actions-3j
+          POSTGRES_PASSWORD: password
         ports:
           # will assign a random free host port
           - 5432/tcp
@@ -58,8 +60,9 @@ jobs:
           # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
           # use localhost for the host here because we are running the job on the VM.
           # If we were running the job on in a container this would be postgres
-          PG_HOST: localhost
-          PG_PORT: ${{ job.services.postgres.ports[5432] }} # get randomly assigned published port
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }} # get randomly assigned published port
+          POSTGRES_PASSWORD: ${{ job.services.postgres.env.POSTGRES_PASSWORD }}
           RAILS_ENV: test
         run: |
           bundle exec --gemfile=${{ matrix.gemfile }} rails db:schema:load
