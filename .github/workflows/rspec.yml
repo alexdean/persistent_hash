@@ -11,6 +11,18 @@ on:
   push:
     branches: '**'
 
+env:
+  # configures database.yml in dummy app
+  DB: pgsql
+  DB_USERNAME: test
+  # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
+  # use localhost for the host here because we are running the job on the VM.
+  # If we were running the job on in a container this would be postgres
+  POSTGRES_HOST: localhost
+  POSTGRES_PORT: 5432 # ${{ services.postgres.ports[5432] }} # get randomly assigned published port
+  POSTGRES_PASSWORD: password # copypasta. ${{ job.services.postgres.env.POSTGRES_PASSWORD }}
+  RAILS_ENV: test
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -23,11 +35,9 @@ jobs:
           POSTGRES_DB: persistent_hash_test
           # password cannot be blank?
           # https://dev.to/lxxxvi/til-using-postgres-in-github-actions-3j
-          POSTGRES_PASSWORD: password
-        ports:
-          # will assign a random free host port
-          - 5432/tcp
-          # needed because the postgres container does not provide a healthcheck
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        ports: ["5432:5432"]
+        # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     strategy:
@@ -41,18 +51,6 @@ jobs:
             ruby: '3.0'
           - gemfile: 'gemfiles/rails-5-2.gemfile'
             ruby: '3.1'
-
-    env:
-      # configures database.yml in dummy app
-      DB: pgsql
-      DB_USERNAME: test
-      # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
-      # use localhost for the host here because we are running the job on the VM.
-      # If we were running the job on in a container this would be postgres
-      POSTGRES_HOST: localhost
-      POSTGRES_PORT: ${{ services.postgres.ports[5432] }} # get randomly assigned published port
-      POSTGRES_PASSWORD: password # copypasta. ${{ job.services.postgres.env.POSTGRES_PASSWORD }}
-      RAILS_ENV: test
 
     steps:
       - uses: actions/checkout@v2
