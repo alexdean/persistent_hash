@@ -43,6 +43,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
+      - name: Install dependencies
+        run: bundle install --gemfile=${{ matrix.gemfile }}
       - name: Setup test database
         env:
           DB: pgsql
@@ -51,8 +53,6 @@ jobs:
           # PGHOST: localhost
           # PGUSER: test
         run: |
-          bin/rails db:setup
-      - name: Install dependencies
-        run: bundle install --gemfile=${{ matrix.gemfile }}
+          bundle exec --gemfile=${{ matrix.gemfile }} rails db:setup
       - name: Run tests
         run: bundle exec --gemfile=${{ matrix.gemfile }} rake spec
