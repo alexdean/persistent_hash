@@ -23,6 +23,7 @@ env:
   POSTGRES_PASSWORD: password # copypasta. ${{ job.services.postgres.env.POSTGRES_PASSWORD }}
   RAILS_ENV: test
 
+# next: 1 job per database. re-use strategy and steps.
 jobs:
   test:
     runs-on: ubuntu-latest
