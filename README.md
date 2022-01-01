@@ -6,7 +6,7 @@ their own.
 
 ## Build Status
 
-[![Build Status](https://travis-ci.org/alexdean/persistent_hash.svg?branch=master)](https://travis-ci.org/alexdean/persistent_hash)
+[![Test Suite](https://github.com/alexdean/persistent_hash/actions/workflows/rspec.yml/badge.svg)](https://github.com/alexdean/persistent_hash/actions/workflows/rspec.yml)
 
 ## Usage
 
