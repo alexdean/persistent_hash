@@ -52,6 +52,11 @@ jobs:
           # rails 5.2 doesnt work with ruby 3
           - gemfile: 'gemfiles/rails-5-2.gemfile'
             ruby: '3.0'
+          # rails 7 requires ruby >= 2.7
+          - gemfile: 'gemfiles/rails-7-0.gemfile'
+            ruby: '2.5'
+          - gemfile: 'gemfiles/rails-7-0.gemfile'
+            ruby: '2.6'
 
     steps:
       - uses: actions/checkout@v2
@@ -100,6 +105,11 @@ jobs:
           # rails 5.2 doesnt work with ruby 3
           - gemfile: 'gemfiles/rails-5-2.gemfile'
             ruby: '3.0'
+          # rails 7 requires ruby >= 2.7
+          - gemfile: 'gemfiles/rails-7-0.gemfile'
+            ruby: '2.5'
+          - gemfile: 'gemfiles/rails-7-0.gemfile'
+            ruby: '2.6'
 
     steps:
       - uses: actions/checkout@v2
