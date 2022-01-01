@@ -2,7 +2,7 @@ default: &default
   password: <%= ENV['DB_PASSWORD'] %>
 <% if !ENV['DB'] %>
   adapter: mysql2
-  username: root'
+  username: root
   encoding: utf8mb4
   collation: utf8mb4_unicode_ci
 <% elsif ENV['DB'] == 'mysql' %>
