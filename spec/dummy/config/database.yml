@@ -1,15 +1,22 @@
 default: &default
-  username: <%= ENV['DB_USERNAME'] || 'root' %>
-<% if ENV['DB'] == 'mysql' || !ENV['DB'] %>
-  password:
+  password: <%= ENV['DB_PASSWORD'] %>
+<% if !ENV['DB'] %>
   adapter: mysql2
+  username: root'
+  encoding: utf8mb4
+  collation: utf8mb4_unicode_ci
+<% elsif ENV['DB'] == 'mysql' %>
+  adapter: mysql2
+  host: localhost
+  port: 3306
+  username: <%= ENV['DB_USERNAME'] %>
   encoding: utf8mb4
   collation: utf8mb4_unicode_ci
 <% elsif ENV['DB'] == 'pgsql' %>
   adapter: postgresql
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
-  host: <%= ENV['POSTGRES_HOST'] %>
-  port: <%= ENV['POSTGRES_PORT'] %>
+  host: localhost
+  port: 5432
+  user: <%= ENV['DB_USERNAME'] %>
 <%
   else
     raise "unknown DB value '#{ENV['DB']}'"
