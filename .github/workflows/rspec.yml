@@ -1,0 +1,119 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+
+name: rspec
+
+on:
+  push:
+    branches: '**'
+
+env:
+  # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
+  # use localhost for the host here because we are running the job on the VM.
+  # If we were running the job on in a container this would be postgres
+  DB_HOST: localhost
+  DB_USERNAME: test
+  DB_PASSWORD: password
+  DB_NAME: persistent_hash_test
+  RAILS_ENV: test
+
+# next: 1 job per database. re-use strategy and steps.
+jobs:
+  test-mysql:
+    env:
+      # configures database.yml in dummy app
+      DB: mysql
+
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_USER: ${{ env.DB_USERNAME }}
+          MYSQL_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_DATABASE: ${{ env.DB_NAME }}
+          MYSQL_ROOT_PASSWORD: rootpassword
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # TODO: problem with rails & ruby 3.1 https://github.com/rails/rails/pull/42249, related to yaml & aliases (in database.yml)
+        ruby: ['2.5', '2.6', '2.7', '3.0']
+        gemfile: ['gemfiles/rails-5-2.gemfile', 'gemfiles/rails-6-0.gemfile', 'gemfiles/rails-6-1.gemfile']
+        exclude:
+          # rails 5.2 doesnt work with ruby 3
+          - gemfile: 'gemfiles/rails-5-2.gemfile'
+            ruby: '3.0'
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
+        # change this to (see https://github.com/ruby/setup-ruby#versioning):
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Install dependencies
+        run: bundle install --gemfile=${{ matrix.gemfile }}
+      - name: Setup test database
+        run: |
+          bundle exec --gemfile=${{ matrix.gemfile }} rails db:schema:load --trace
+      - name: Run tests
+        run: |
+          bundle exec --gemfile=${{ matrix.gemfile }} rake spec --trace
+
+  test-postgres:
+    runs-on: ubuntu-latest
+
+    env:
+      # configures database.yml in dummy app
+      DB: pgsql
+
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: ${{ env.DB_USERNAME }}
+          # password cannot be blank.
+          # https://dev.to/lxxxvi/til-using-postgres-in-github-actions-3j
+          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+          POSTGRES_DB: ${{ env.DB_NAME }}
+        ports: ["5432:5432"]
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # TODO: problem with rails & ruby 3.1 https://github.com/rails/rails/pull/42249, related to yaml & aliases (in database.yml)
+        ruby: ['2.5', '2.6', '2.7', '3.0']
+        gemfile: ['gemfiles/rails-5-2.gemfile', 'gemfiles/rails-6-0.gemfile', 'gemfiles/rails-6-1.gemfile']
+        exclude:
+          # rails 5.2 doesnt work with ruby 3
+          - gemfile: 'gemfiles/rails-5-2.gemfile'
+            ruby: '3.0'
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
+        # change this to (see https://github.com/ruby/setup-ruby#versioning):
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Install dependencies
+        run: bundle install --gemfile=${{ matrix.gemfile }}
+      - name: Setup test database
+        run: |
+          bundle exec --gemfile=${{ matrix.gemfile }} rails db:schema:load --trace
+      - name: Run tests
+        run: |
+          bundle exec --gemfile=${{ matrix.gemfile }} rake spec --trace

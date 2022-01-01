@@ -1,6 +1,14 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_view/railtie'
+  # action_mailer/railtie
+  # active_job/railtie
+  # action_cable/engine
+  # action_mailbox/engine
+  # action_text/engine
+  # rails/test_unit/railtie
 
 Bundler.require(*Rails.groups)
 require "persistent_hash"
