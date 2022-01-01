@@ -42,7 +42,9 @@ the values in this table.
 
 ```ruby
 # config/initializers/persistent_hash.rb
-PersistentHash::Formatter.add(Integer, ->(val) { "This Integer is #{val}."})
+Rails.application.config.to_prepare do
+  PersistentHash::Formatter.add(Integer, ->(val) { "This Integer is #{val}."})
+end
 
 PersistentHash['number'] = 5
 
