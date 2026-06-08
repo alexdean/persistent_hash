@@ -1,3 +1,12 @@
+## 1.0.0 : June 8, 2026
+
+  - **Breaking:** drop support for end-of-life Ruby and Rails versions.
+  - Supported Ruby versions are now 3.3, 3.4 and 4.0 (Ruby 4.0 requires Rails 8.0+).
+  - Supported Rails versions are now 7.2, 8.0 and 8.1 (`rails >= 7.2`).
+  - Fix compatibility with Rails 7.1+ by removing the `legacy_connection_handling`
+    setting from the dummy app (the option was removed from Rails).
+  - Refresh the CI matrix and bump GitHub Actions, MySQL and PostgreSQL service versions.
+
 ## 0.7.0 : July 25, 2019
 
   - do "select then insert/update/delete" instead of "always delete then always insert"

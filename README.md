@@ -8,6 +8,18 @@ their own.
 
 [![Test Suite](https://github.com/alexdean/persistent_hash/actions/workflows/rspec.yml/badge.svg)](https://github.com/alexdean/persistent_hash/actions/workflows/rspec.yml)
 
+## Supported versions
+
+`persistent_hash` is tested against currently-supported (non-EOL) Ruby and Rails
+releases:
+
+  - Ruby 3.3, 3.4, 4.0
+  - Rails 7.2, 8.0, 8.1
+
+Ruby 4.0 is supported with Rails 8.0 and 8.1. Rails 7.2 does not support Ruby 4.0.
+
+For older Ruby/Rails versions, use `persistent_hash` 0.7.x.
+
 ## Usage
 
 ```ruby

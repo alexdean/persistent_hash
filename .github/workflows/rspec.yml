@@ -21,18 +21,18 @@ env:
   DB_NAME: persistent_hash_test
   RAILS_ENV: test
 
-# next: 1 job per database. re-use strategy and steps.
 jobs:
   test-mysql:
     env:
       # configures database.yml in dummy app
       DB: mysql
+      BUNDLE_GEMFILE: ${{ matrix.gemfile }}
 
     runs-on: ubuntu-latest
 
     services:
       mysql:
-        image: mysql:8.0
+        image: mysql:9.7
         env:
           MYSQL_USER: ${{ env.DB_USERNAME }}
           MYSQL_PASSWORD: ${{ env.DB_PASSWORD }}
@@ -45,35 +45,29 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # TODO: problem with rails & ruby 3.1 https://github.com/rails/rails/pull/42249, related to yaml & aliases (in database.yml)
-        ruby: ['2.5', '2.6', '2.7', '3.0']
-        gemfile: ['gemfiles/rails-5-2.gemfile', 'gemfiles/rails-6-0.gemfile', 'gemfiles/rails-6-1.gemfile', 'gemfiles/rails-7-0.gemfile']
+        ruby: ['3.3', '3.4', '4.0']
+        gemfile: ['gemfiles/rails-7-2.gemfile', 'gemfiles/rails-8-0.gemfile', 'gemfiles/rails-8-1.gemfile']
         exclude:
-          # rails 5.2 doesnt work with ruby 3
-          - gemfile: 'gemfiles/rails-5-2.gemfile'
-            ruby: '3.0'
-          # rails 7 requires ruby >= 2.7
-          - gemfile: 'gemfiles/rails-7-0.gemfile'
-            ruby: '2.5'
-          - gemfile: 'gemfiles/rails-7-0.gemfile'
-            ruby: '2.6'
+          # Rails 7.2 is in security-only maintenance and was released before
+          # Ruby 4.0, so it does not support Ruby 4.0.
+          - ruby: '4.0'
+            gemfile: 'gemfiles/rails-7-2.gemfile'
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Ruby
         # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
         # change this to (see https://github.com/ruby/setup-ruby#versioning):
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - name: Install dependencies
-        run: bundle install --gemfile=${{ matrix.gemfile }}
+          bundler-cache: true
       - name: Setup test database
         run: |
-          bundle exec --gemfile=${{ matrix.gemfile }} rails db:schema:load --trace
+          bundle exec rails db:schema:load --trace
       - name: Run tests
         run: |
-          bundle exec --gemfile=${{ matrix.gemfile }} rake spec --trace
+          bundle exec rake spec --trace
 
   test-postgres:
     runs-on: ubuntu-latest
@@ -81,10 +75,11 @@ jobs:
     env:
       # configures database.yml in dummy app
       DB: pgsql
+      BUNDLE_GEMFILE: ${{ matrix.gemfile }}
 
     services:
       postgres:
-        image: postgres:12
+        image: postgres:18
         env:
           POSTGRES_USER: ${{ env.DB_USERNAME }}
           # password cannot be blank.
@@ -98,32 +93,26 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # TODO: problem with rails & ruby 3.1 https://github.com/rails/rails/pull/42249, related to yaml & aliases (in database.yml)
-        ruby: ['2.5', '2.6', '2.7', '3.0']
-        gemfile: ['gemfiles/rails-5-2.gemfile', 'gemfiles/rails-6-0.gemfile', 'gemfiles/rails-6-1.gemfile', 'gemfiles/rails-7-0.gemfile']
+        ruby: ['3.3', '3.4', '4.0']
+        gemfile: ['gemfiles/rails-7-2.gemfile', 'gemfiles/rails-8-0.gemfile', 'gemfiles/rails-8-1.gemfile']
         exclude:
-          # rails 5.2 doesnt work with ruby 3
-          - gemfile: 'gemfiles/rails-5-2.gemfile'
-            ruby: '3.0'
-          # rails 7 requires ruby >= 2.7
-          - gemfile: 'gemfiles/rails-7-0.gemfile'
-            ruby: '2.5'
-          - gemfile: 'gemfiles/rails-7-0.gemfile'
-            ruby: '2.6'
+          # Rails 7.2 is in security-only maintenance and was released before
+          # Ruby 4.0, so it does not support Ruby 4.0.
+          - ruby: '4.0'
+            gemfile: 'gemfiles/rails-7-2.gemfile'
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Ruby
         # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
         # change this to (see https://github.com/ruby/setup-ruby#versioning):
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - name: Install dependencies
-        run: bundle install --gemfile=${{ matrix.gemfile }}
+          bundler-cache: true
       - name: Setup test database
         run: |
-          bundle exec --gemfile=${{ matrix.gemfile }} rails db:schema:load --trace
+          bundle exec rails db:schema:load --trace
       - name: Run tests
         run: |
-          bundle exec --gemfile=${{ matrix.gemfile }} rake spec --trace
+          bundle exec rake spec --trace

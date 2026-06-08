@@ -6,10 +6,10 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'mysql2', '~> 0.5.0'
-  gem 'pg', '~> 1.1.0'
-  gem 'rake', '~> 12.0'
-  gem 'rspec', '~> 3.8.0'
-  gem 'rspec-rails', '~> 3.8.0'
-  gem 'timecop', '~> 0.9.0'
+  gem 'mysql2', '~> 0.5'
+  gem 'pg', '~> 1.5'
+  gem 'rake', '~> 13.0'
+  gem 'rspec', '~> 3.13'
+  gem 'rspec-rails', '~> 7.1'
+  gem 'timecop', '~> 0.9'
 end

@@ -14,10 +14,12 @@ Gem::Specification.new do |s|
   s.description = "Handy place to stick small bits of persistent data. Like redis if you don't want to install redis."
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "CHANGELOG.md"]
+  s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", ">= 5.0"
+  s.required_ruby_version = ">= 3.3.0"
+
+  s.add_dependency "rails", ">= 7.2"
 
   s.add_development_dependency "mysql2"
   s.add_development_dependency "pg"
